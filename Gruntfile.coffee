@@ -264,5 +264,6 @@ module.exports = (grunt) ->
   grunt.registerTask 'site', ['sass', 'coffee', 'umd', 'copy:vendor', 'copy:scripts', 'copy:styles', 'usebanner', 'jekyll']
   grunt.registerTask 'test', ['coffee:moduleSpec', 'coffee:buttonSpec', 'jasmine']
   grunt.registerTask 'package', ['clean:package', 'copy:package', 'uglify:simditor', 'compress']
+  grunt.registerTask 'build', ['coffee:simditor', 'umd', 'usebanner:simditor']
 
   grunt.registerTask 'fonticons', ['curl']

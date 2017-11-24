@@ -44,7 +44,7 @@ class Simditor extends SimpleModule
 
     if @opts.upload and simpleUploader
       uploadOpts = if typeof @opts.upload == 'object' then @opts.upload else {}
-      @uploader = simpleUploader(uploadOpts)
+      @uploader = new simpleUploader(uploadOpts)
 
     # set default value after all plugins are connected
     @on 'initialized', =>

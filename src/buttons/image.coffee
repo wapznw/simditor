@@ -189,8 +189,9 @@ class ImageButton extends Button
         img_path = @defaultImage
       else
         img_path = result.body.fileUrl
+        if @editor.opts.upload && @editor.opts.upload.imgPrefix
+          img_path = @editor.opts.upload.imgPrefix + img_path
 
-      console.log(@editor.opts)
       @loadImage $img, img_path, =>
         $img.removeData 'file'
         $img.removeClass 'uploading'
@@ -199,6 +200,9 @@ class ImageButton extends Button
         $mask = $img.data('mask')
         $mask.remove() if $mask
         $img.removeData 'mask'
+
+        if @editor.opts.upload && @editor.opts.upload.imgPrefix
+          $img.attr('data-src', img_path.substr(@editor.opts.upload.imgPrefix.length))
 
         @editor.trigger 'valuechanged'
         if @editor.body.find('img.uploading').length < 1
