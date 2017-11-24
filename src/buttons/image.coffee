@@ -181,15 +181,16 @@ class ImageButton extends Button
           result = $.parseJSON result
         catch e
           result =
-            success: false
+            isSuccess: false
 
-      if result.success == false
-        msg = result.msg || @_t('uploadFailed')
+      if result.isSuccess == false
+        msg = result.message || @_t('uploadFailed')
         alert msg
         img_path = @defaultImage
       else
-        img_path = result.file_path
+        img_path = result.body.fileUrl
 
+      console.log(@editor.opts)
       @loadImage $img, img_path, =>
         $img.removeData 'file'
         $img.removeClass 'uploading'
@@ -205,7 +206,7 @@ class ImageButton extends Button
 
       if @popover.active
         @popover.srcEl.prop('disabled', false)
-        @popover.srcEl.val result.file_path
+        @popover.srcEl.val result.body.fileUrl
 
     @editor.uploader.on 'uploaderror', (e, file, xhr) =>
       return unless file.inline
@@ -214,7 +215,7 @@ class ImageButton extends Button
       if xhr.responseText
         try
           result = $.parseJSON xhr.responseText
-          msg = result.msg
+          msg = result.message
         catch e
           msg = @_t('uploadError')
 
